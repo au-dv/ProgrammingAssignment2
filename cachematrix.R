@@ -1,15 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Funciones para obtener una matriz inversa 
+## 
 
-## Write a short comment describing this function
+## Esta función crea una "matrix" especial donde podamos
+## depositar su inversa
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  matriz <- NULL
+  set <- function(y) {
+    x <<- y
+    matriz <<- NULL
+  }
+  get <- function() x
+  setInverso <- function(inverse) matriz <<- inverse
+  getInverso <- function() matriz
+  list(set = set, 
+       get = get, 
+       setInverso = setInverso, getInverso = getInverso)
 }
-
-
-## Write a short comment describing this function
+## Con esta funcion se crea la matriz inversa
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  matriz <- x$getInverso()
+  if(!is.null(matriz)) {
+    message("getting cached data")
+    return(matriz)
+  }
+  data <- x$get()
+  matriz <- solve(data, ...)
+  x$setInverso(matriz)
+  matriz
 }
